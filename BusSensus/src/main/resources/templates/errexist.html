@@ -4,7 +4,8 @@
 	<div th:fragment="copy">
 		<div class="alert alert-danger alert-dismissible">
 			<button type="button" class="btn" data-bs-dismiss="alert"></button>
-			<strong>ATENTIONARE !</strong><br>Exista in baza de date
+			<strong>ATENTIONARE !</strong><br>
+			<span th:text="${texterr}"></span>
 		</div>
 	</div>
 </body>
