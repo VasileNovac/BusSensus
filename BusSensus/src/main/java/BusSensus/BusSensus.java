@@ -17,10 +17,9 @@ public class BusSensus {
 
 	public BusSensus() { }
 
-	public BusSensus(Long id, String numberBus, String routeBus, String stationBus, String userId, int traveler,
+	public BusSensus(String numberBus, String routeBus, String stationBus, String userId, int traveler,
 			int travelerUp, int travelerDown, String data, String ora) {
 		super();
-		Id = id;
 		this.numberBus = numberBus;
 		this.routeBus = routeBus;
 		this.stationBus = stationBus;

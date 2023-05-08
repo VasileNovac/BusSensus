@@ -22,7 +22,13 @@
              	<li class="nav-item">
                		<a id="id4" th:class="'nav-link '+ ${ymodul == 'initSB' ? 'active' : ' '}" th:aria-current="${ymodul == 'initSB' ? 'page' : ' '}" href="/initsb"><b>Init StationB</b></a>
              	</li>
-           </ul>
+            	<li class="nav-item">
+               		<a id="id5" th:class="'nav-link '+ ${ymodul == 'buSensus' ? 'active' : ' '}" th:aria-current="${ymodul == 'buSensus' ? 'page' : ' '}" href="/busensus"><b>BusSensus</b></a>
+               	</li>
+             	<li class="nav-item">
+               		<a id="id6" th:class="'nav-link '+ ${ymodul == 'rap' ? 'active' : ' '}" th:aria-current="${ymodul == 'rap' ? 'page' : ' '}" href="/rap"><b>Raport</b></a>
+             	</li>
+            </ul>
          </div>
    	</div>   	
 </nav>

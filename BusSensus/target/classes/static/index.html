@@ -32,6 +32,12 @@
              	<li class="nav-item">
                		<a id="id4" class="nav-link" href="/initsb"><b>Init StationB</b></a>
              	</li>
+             	<li class="nav-item">
+               		<a id="id5" class="nav-link" href="/busensus"><b>BusSensus</b></a>
+               	</li>
+             	<li class="nav-item">
+               		<a id="id6" class="nav-link" href="/rap"><b>Raport</b></a>
+             	</li>
            	</ul>
          	</div>
    		</div>   	
@@ -45,17 +51,16 @@
     	    <p><b>Instrucțiuni utilizare</b></p>
 	        <p>Se execută urmatoarele comenzi in ordine:</p>
     	    <ul>
-        		<li><b>Initializare Init NumberB</b></li>
-        		<ul>
-	    			<li>Se introduc informatiile referitoare la NumberBus conform formatului JJ-NN-CCC </li>
-    			</ul>
+        		<li><b>Initializare Init NumberB</b>
+	        		<ul><li>Se introduc informatiile referitoare la NumberBus conform formatului JJ-NN-CCC</li></ul>
+    			</li>
     	    </ul>
     	    <ul>
-    	    	<li><b>Initializare Init RouteB</b></li>
+    	    	<li><b>Initializare Init RouteB</b>
    	    		<ul>
-   	    			<li>Se introduc informatii referitoare la RouteBus conform formatului de mai jos </li>
+   	    			<li>Se introduc informatii referitoare la RouteBus conform formatului de mai jos:
 	   	    		<ul>
-   		    			<li>Transport urban:</li>
+   		    			<li>Transport urban:
 	   	    			<ul>
 		    				<li>L01 -tur, L01 -retur, L02 -tur, L02 -retur, L02B-tur, L02B-retur, 
 					    	    L03 -tur, L03 -retur, L04 -tur, L04 -retur, L05 -tur, L05 -retur, L05M-tur, L05M-retur,
@@ -70,30 +75,36 @@
 						        L52 -tur, L52 -retur, L53 -tur, L53 -retur, L54 -tur, L54 -retur, L60 -tur, L60 -retur 
 						    </li>
 						</ul>
+						</li>
 					</ul>
 					<ul>
-						<li>Transport metropolitan:</li>
+						<li>Transport metropolitan:
 						<ul>
-							<li>M110-tur, M110-retur, M130-tur, M130-retur, M131-tur, M131-retur,
-				        		M210-tur, M210-retur, M220-tur, M220-retur, M310-tur, M310-retur, M320-tur, M320-retur,
-		    		    		M410-tur, M410-retur, M411-tur, M411-retur, M412-tur, M412-retur, M420-tur, M420-retur,
-								M511-tur, M511-retur, M520-tur, M520-retur, M540-tur, M540-retur, M610-tur, M610-retur,
-		        				M611-tur, M611-retur, M612-tur, M612-retur, M620-tur, M620-retur, M810-tur, M810-retur 
+							<li>M110-tur, M110-retur, M130-tur, M130-retur, M131-tur, M131-retur, M210-tur, M210-retur,
+				        		M220-tur, M220-retur, M310-tur, M310-retur, M320-tur, M320-retur, M410-tur, M410-retur,
+		    		    		M411-tur, M411-retur, M412-tur, M412-retur, M420-tur, M420-retur, M511-tur, M511-retur,
+								M520-tur, M520-retur, M540-tur, M540-retur, M610-tur, M610-retur, M611-tur, M611-retur,
+		        				M612-tur, M612-retur, M620-tur, M620-retur, M810-tur, M810-retur 
 			        		</li>
 				    	</ul>
+				    	</li>
 				    </ul>
-			    </ul>
-		    </ul>
+				    </li>
+				</ul>
+				</li>
+			</ul>
 		    <ul>
-		       	<li><b>Initializare Init StationB</b></li>
+		       	<li><b>Initializare Init StationB</b>
 		        <ul>
-   	    			<li>Se introduc informatii referitoare la StationBus conform formatului de mai jos</li>
+   	    			<li>Se introduc informatii referitoare la StationBus conform formatului de mai jos
 	   	    		<ul>
    		    			<li>RouteBus: L05 -tur</li>
 			        	<li>StationBus: stadMunicipal, BisericaBartolomeu, Carierei, Memorandului, BisericiiRomane, 
 					        Astra, Dramatic, Patria, HidroA, HidroB, SpitalulJudetean, LiceulInformatic, Berzei, Pompieri, 
 					        Metrom, Poienelor, Roman
-				    	</li><br>
+				    	</li>
+				    </ul><br>
+				    <ul>
 			        	<li>RouteBus: L05 -retur</li>
 			        	<li>StationBus: Roman, Soarelui, Berzei, LiceulInformatic, SpitalulJudetean, Toamnei, LiceulMesota, CameraComert,
 			        		Sanitas, Primarie, Astra, BisericiiRomane, Memorandului, Carierei, BartolomeuGara, stadMunicipal
@@ -102,11 +113,13 @@
 					<ul>
 						<li>RouteBus: L04 -tur</li>
 			        	<li>StationBus: GaraBrasov, Dacia, Infostar, CameraComert, Sanitas, Primarie, LivadaPostei, BisericaNeagra, Brancoveanu, PiataUnirii, Tocile</li>
-			        	<br>
+			        </ul><br>
+			        <ul>
 		    	   		<li>RouteBus: L04 -retur</li>
 		       			<li>StationBus: Tocile, PiataUnirii, LiceulSaguna, LivadaPostei, Dramatic, Patria, HidroA, Infostar, Rapid, GaraBrasov </li>
 			       	</ul>
-				</ul>
+			    </ul>
+		       	</li>
 			</ul>
 		</div>
     </div>

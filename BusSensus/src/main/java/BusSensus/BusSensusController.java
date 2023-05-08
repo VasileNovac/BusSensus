@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 //import java.util.LinkedHashMap;
+import java.util.Calendar;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
@@ -27,12 +28,12 @@ public class BusSensusController {
 	private String ynumberBus = "" ;
 	private String yrouteBus = "" ;
 	private String ystationBus = "" ;
-	private String insUpd, sql, texterr ;
+	private String insUpd, sql, texterr, ziua, luna, an, ora, min ;
 	public static String numberbus, routebus, stationbus ;
 	public ArrayList<String> listNB ;
 	public ArrayList<String> listRB ;
-	public ArrayList<InitSB> listSB ;
-	public ArrayList<String> rbList ;
+	public ArrayList<String> listSB ;
+//	public ArrayList<String> rbList ;
 
 
 	@GetMapping("/initnb")
@@ -250,10 +251,10 @@ public class BusSensusController {
 				
 				stmt = xconn.createStatement(); 
 				ResultSet sql = stmt.executeQuery("SELECT routebus, stationbus FROM stationbus order by routebus") ;
-				listSB = new ArrayList<InitSB>() ;
+				listSB = new ArrayList<String>() ;
 				while(sql.next()) {
 					InitSB initsb = new InitSB(sql.getString("routebus"), sql.getString("stationbus")) ;
-					listSB.add(initsb) ;
+					listSB.add(initsb.getStationBus()) ;
 				}
 				ystationBus = "" ;
 			}
@@ -288,10 +289,10 @@ public class BusSensusController {
 				
 				stmt = xconn.createStatement(); 
 				ResultSet sql = stmt.executeQuery("SELECT routebus, stationbus FROM stationbus order by routebus") ;
-				listSB = new ArrayList<InitSB>() ;
+				listSB = new ArrayList<String>() ;
 				while(sql.next()) {
 					InitSB initsb = new InitSB(sql.getString("routebus"), sql.getString("stationbus")) ;
-					listSB.add(initsb) ;
+					listSB.add(initsb.getStationBus()) ;
 				}
 				ystationBus = "" ;
 			} else {
@@ -303,6 +304,70 @@ public class BusSensusController {
 			se.printStackTrace(); 
 		}
 		return "redirect:initsb" ;
+	}
+
+	@GetMapping("/busensus")
+	public void busSensus( Model model ) {
+		model.addAttribute("ymodul", "buSensus") ;
+		BusSensus busSensus = new BusSensus() ;
+		model.addAttribute("busSensus", busSensus) ;
+		model.addAttribute("nbList", listNB) ;
+		model.addAttribute("rbList", listRB) ;
+		model.addAttribute("sbList", listSB) ;
+	}
+
+	@PostMapping("/addBusSensus")
+	public String addBusSensus( @ModelAttribute BusSensus busSensus, Model model ) {
+		Calendar calendar = Calendar.getInstance();
+	    ziua = Integer.toString(calendar.get(Calendar.DATE));
+	    if (calendar.get(Calendar.DATE) < 10) {
+	    	ziua = "0" + Integer.toString(calendar.get(Calendar.DATE));
+	    }
+    	luna = Integer.toString((calendar.get(Calendar.MONTH)+1)) ;
+	    if ((calendar.get(Calendar.MONTH)+1) < 10) {
+	    	luna = "0" + Integer.toString((calendar.get(Calendar.MONTH)+1)) ;
+	    }
+	    an = Integer.toString(calendar.get(Calendar.YEAR)) ;
+	    ora = Integer.toString(calendar.get(Calendar.HOUR)) ;
+	    if (calendar.get(Calendar.HOUR) < 10) {
+	    	ora = "0" + calendar.get(Calendar.HOUR) ;
+	    }
+	    min = Integer.toString(calendar.get(Calendar.MINUTE)) ;
+	    if (calendar.get(Calendar.MINUTE) < 10) {
+	    	min = "0" + calendar.get(Calendar.MINUTE) ;
+	    }
+//		busSensusRepository.save(busSensus) ;
+		
+		xconn = BusSensusApplication.conn ;
+		try {
+			stmt = xconn.createStatement();
+			insUpd = "INSERT INTO bs (numberbus, routebus, stationbus, traveler, travelerup, travelerdown, userid, data, ora) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)" ;
+			PreparedStatement iS = xconn.prepareStatement(insUpd);
+			iS.setString(1, busSensus.getNumberBus());
+			iS.setString(2, busSensus.getRouteBus());
+			iS.setString(3, busSensus.getStationBus());
+			iS.setInt(4, busSensus.getTraveler());
+			iS.setInt(5, busSensus.getTravelerUp());
+			iS.setInt(6, busSensus.getTravelerDown());
+			iS.setString(7, busSensus.getUserId());
+			iS.setString(8, ziua+"-"+luna+"-"+an);
+			iS.setString(9, ora+":"+min);
+			iS.executeUpdate();
+			iS.close();
+				
+//			stmt = xconn.createStatement(); 
+//			ResultSet sql = stmt.executeQuery("SELECT * FROM bs") ;
+		} catch(SQLException se) { 
+//	Handle errors for JDBC 
+			se.printStackTrace(); 
+		}
+		return "redirect:busensus" ;
+	}
+	@GetMapping("/rap")
+	public void rap( Model model ) {
+		model.addAttribute("ymodul", "rap") ;
+		BusSensus busSensus = new BusSensus() ;
+		model.addAttribute("busSensus", busSensus) ;
 	}
 
 }

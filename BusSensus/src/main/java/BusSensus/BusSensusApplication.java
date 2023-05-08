@@ -13,7 +13,7 @@ import java.sql.Statement;
 public class BusSensusApplication {
 
 	private static String sql ;
-	public static String luna, an, denLuna ;
+	public static String luna, an, denLuna, ziua, ora, min ;
 //JDBC driver name and database URL 
 	static final String JDBC_DRIVER = "org.h2.Driver";   
 //	static final String DB_URL = "jdbc:h2:~/test;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE"; 
@@ -25,7 +25,7 @@ public class BusSensusApplication {
 
 	public static Connection conn = null; 
 	public static Statement stmt = null; 
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(BusSensusApplication.class, args);
 		
