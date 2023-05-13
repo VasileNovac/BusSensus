@@ -13,12 +13,11 @@ public class BusSensus {
 	private Long Id ;
 	private String numberBus, routeBus, stationBus, userId ;
 	private int traveler, travelerUp, travelerDown ;
-	private String data, ora ;
+	private String data, ora, delaD, pilaD, delaO, pilaO ;
 
 	public BusSensus() { }
 
-	public BusSensus(String numberBus, String routeBus, String stationBus, String userId, int traveler,
-			int travelerUp, int travelerDown, String data, String ora) {
+	public BusSensus(String numberBus, String routeBus, String stationBus, String userId, int traveler, int travelerUp, int travelerDown, String data, String ora) {
 		super();
 		this.numberBus = numberBus;
 		this.routeBus = routeBus;
@@ -31,6 +30,17 @@ public class BusSensus {
 		this.ora = ora;
 	}
 
+	public BusSensus(String numberBus, String routeBus, String stationBus, String delaD, String pilaD, String delaO, String pilaO) {
+		super();
+		this.numberBus = numberBus;
+		this.routeBus = routeBus;
+		this.stationBus = stationBus;
+		this.delaD = delaD;
+		this.pilaD = pilaD ;
+		this.delaO = delaO;
+		this.pilaO = pilaO ;
+	}
+	
 	public Long getId() {
 		return Id;
 	}
@@ -101,11 +111,40 @@ public class BusSensus {
 		this.ora = ora;
 	}
 
+	public String getDelaD() {
+		return delaD;
+	}
+	public void setDelaD(String delaD) {
+		this.delaD = delaD;
+	}
+
+	public String getPilaD() {
+		return pilaD;
+	}
+	public void setPilaD(String pilaD) {
+		this.pilaD = pilaD;
+	}
+
+	public String getDelaO() {
+		return delaO;
+	}
+	public void setDelaO(String delaO) {
+		this.delaO = delaO;
+	}
+
+	public String getPilaO() {
+		return pilaO;
+	}
+	public void setPilaO(String pilaO) {
+		this.pilaO = pilaO;
+	}
+
 	@Override
 	public String toString() {
 		return "BusSensus [Id=" + Id + ", numberBus=" + numberBus + ", routeBus=" + routeBus + ", stationBus="
 				+ stationBus + ", userId=" + userId + ", traveler=" + traveler + ", travelerUp=" + travelerUp
-				+ ", travelerDown=" + travelerDown + ", data=" + data + ", ora=" + ora + "]";
+				+ ", travelerDown=" + travelerDown + ", data=" + data + ", ora=" + ora + ", delaD=" + delaD + ", pilaD="
+				+ pilaD + ", delaO=" + delaO + ", pilaO=" + pilaO + "]";
 	}
 	
 }

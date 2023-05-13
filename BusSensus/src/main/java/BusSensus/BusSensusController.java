@@ -33,7 +33,7 @@ public class BusSensusController {
 	public ArrayList<String> listNB ;
 	public ArrayList<String> listRB ;
 	public ArrayList<String> listSB ;
-//	public ArrayList<String> rbList ;
+	public ArrayList<BusSensus> listBS ;
 
 
 	@GetMapping("/initnb")
@@ -71,6 +71,7 @@ public class BusSensusController {
 				stmt = xconn.createStatement(); 
 				ResultSet sql = stmt.executeQuery("SELECT numberbus FROM numberbus order by numberbus") ;
 				listNB = new ArrayList<String>() ;
+				listNB.add(" ") ;
 				while(sql.next()) {
 					InitNB initnb = new InitNB(sql.getString("numberbus")) ;
 					listNB.add(initnb.getNumberBus()) ;
@@ -107,6 +108,7 @@ public class BusSensusController {
 				stmt = xconn.createStatement(); 
 				ResultSet sql = stmt.executeQuery("SELECT numberbus FROM numberbus order by numberbus") ;
 				listNB = new ArrayList<String>() ;
+				listNB.add(" ") ;
 				while(sql.next()) {
 					InitNB initnb = new InitNB(sql.getString("numberbus")) ;
 					listNB.add(initnb.getNumberBus()) ;
@@ -160,6 +162,7 @@ public class BusSensusController {
 				stmt = xconn.createStatement(); 
 				ResultSet sql = stmt.executeQuery("SELECT routebus FROM routebus order by routebus") ;
 				listRB = new ArrayList<String>() ;
+				listRB.add(" ") ;
 				while(sql.next()) {
 					InitRB initrb = new InitRB(sql.getString("routebus")) ;
 					listRB.add(initrb.getRouteBus()) ;
@@ -196,6 +199,7 @@ public class BusSensusController {
 				stmt = xconn.createStatement(); 
 				ResultSet sql = stmt.executeQuery("SELECT routebus FROM routebus order by routebus") ;
 				listRB = new ArrayList<String>() ;
+				listRB.add(" ") ;
 				while(sql.next()) {
 					InitRB initrb = new InitRB(sql.getString("routebus")) ;
 					listRB.add(initrb.getRouteBus()) ;
@@ -252,6 +256,7 @@ public class BusSensusController {
 				stmt = xconn.createStatement(); 
 				ResultSet sql = stmt.executeQuery("SELECT routebus, stationbus FROM stationbus order by routebus") ;
 				listSB = new ArrayList<String>() ;
+				listSB.add(" ") ;
 				while(sql.next()) {
 					InitSB initsb = new InitSB(sql.getString("routebus"), sql.getString("stationbus")) ;
 					listSB.add(initsb.getStationBus()) ;
@@ -290,6 +295,7 @@ public class BusSensusController {
 				stmt = xconn.createStatement(); 
 				ResultSet sql = stmt.executeQuery("SELECT routebus, stationbus FROM stationbus order by routebus") ;
 				listSB = new ArrayList<String>() ;
+				listSB.add(" ") ;
 				while(sql.next()) {
 					InitSB initsb = new InitSB(sql.getString("routebus"), sql.getString("stationbus")) ;
 					listSB.add(initsb.getStationBus()) ;
@@ -328,9 +334,9 @@ public class BusSensusController {
 	    	luna = "0" + Integer.toString((calendar.get(Calendar.MONTH)+1)) ;
 	    }
 	    an = Integer.toString(calendar.get(Calendar.YEAR)) ;
-	    ora = Integer.toString(calendar.get(Calendar.HOUR)) ;
-	    if (calendar.get(Calendar.HOUR) < 10) {
-	    	ora = "0" + calendar.get(Calendar.HOUR) ;
+	    ora = Integer.toString(calendar.get(Calendar.HOUR_OF_DAY)) ;
+	    if (calendar.get(Calendar.HOUR_OF_DAY) < 10) {
+	    	ora = "0" + calendar.get(Calendar.HOUR_OF_DAY) ;
 	    }
 	    min = Integer.toString(calendar.get(Calendar.MINUTE)) ;
 	    if (calendar.get(Calendar.MINUTE) < 10) {
@@ -363,11 +369,44 @@ public class BusSensusController {
 		}
 		return "redirect:busensus" ;
 	}
+
 	@GetMapping("/rap")
 	public void rap( Model model ) {
 		model.addAttribute("ymodul", "rap") ;
 		BusSensus busSensus = new BusSensus() ;
 		model.addAttribute("busSensus", busSensus) ;
+		model.addAttribute("listBS", listBS) ;
+		model.addAttribute("nbList", listNB) ;
+		model.addAttribute("rbList", listRB) ;
+		model.addAttribute("sbList", listSB) ;
+	}
+
+	@PostMapping("/addRap")
+	public String addRap( @ModelAttribute BusSensus busSensus, Model model ) {
+		model.addAttribute("ymodul", "rap") ;
+		try {
+			stmt = xconn.createStatement(); 
+			sql = "SELECT * FROM bs WHERE numberbus=? AND routebus=? AND stationbus=? AND data BETWEEN ? AND ? AND ora BETWEEN ? AND ?" ;
+			PreparedStatement isql = xconn.prepareStatement(sql);
+			isql.setString(1, busSensus.getNumberBus());
+			isql.setString(2, busSensus.getRouteBus()) ;
+			isql.setString(3, busSensus.getStationBus()) ;
+			isql.setString(4, busSensus.getDelaD()) ;
+			isql.setString(5, busSensus.getPilaD()) ;
+			isql.setString(6, busSensus.getDelaO()) ;
+			isql.setString(7, busSensus.getPilaO()) ;
+			ResultSet rs = isql.executeQuery();
+//		Extract data from result set 
+			listBS = new ArrayList<BusSensus>() ;
+			while(rs.next()) { 
+				BusSensus rbusSensus = new BusSensus(rs.getString("numberbus"), rs.getString("routebus"), rs.getString("stationbus"), rs.getString("userid"), rs.getInt("traveler"), rs.getInt("travelerUp"), rs.getInt("travelerDown"), rs.getString("data"), rs.getString("ora")) ;
+				listBS.add(rbusSensus) ;
+			}
+		} catch(SQLException se) { 
+//		Handle errors for JDBC 
+			se.printStackTrace(); 
+		}
+		return "redirect:rap";
 	}
 
 }

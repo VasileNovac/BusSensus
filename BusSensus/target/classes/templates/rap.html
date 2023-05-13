@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	 <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Introducere informatii BusSensus</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Generare raport BusSensus</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
 <!-- 
@@ -11,38 +11,91 @@
 	<script type="text/javascript" src="include.js"></script>
 -->
 </head>
-<body>
+<body class="bg-dark">
 	<span th:insert="~{navbar :: copy}"></span>
 	<div class="container-fluid">
 		<form action="#" th:action="@{/addRap}" th:object="${busSensus}" method="post" id="xforme">
 			<div class="row">
-				<div class="col-sm-2 p-3"></div>
-				<div class="col-sm-5 p-3">
+				<div class="col-sm-4 p-3"></div>
+				<div class="col-sm-3 p-3">
 					<fieldset class="border border-warning p-2">
 					<legend class="bg-warning text-danger p-1">Informatii Raport</legend>
 						<div class="form-floating mb-1 mt-1">
-						<ul>
-							<li> Se introduc informatii referitoare la ( care vor fi afisate ):
-								<ul>
-									<li>numberBus, routeBus, stationBus </li>
-									<li>de la Data, pana la Data</li>
-									<li>de la Ora, pana la Ora</li>
-								</ul>
-							</li>
-							<li>Informatiile necompletate sunt ignorate la filtrare si nu sunt afisate</li>
-							<li>Sunt afisate in plus, informarii referitoare la: traveler, travelerUp, travelerDown</li>
-						</ul>
+							<select class="form-select text-success" id="numberbus" autofocus th:field="*{numberBus}">
+								<option th:each="x : ${nbList}" th:value="${x}" th:text="${x}" />
+							</select>
+   							<label for="numberbus" class="form-label text-danger"><b>NumberBus:</b></label>
       					</div>
+						<div class="form-floating mb-1 mt-1">
+							<select class="form-select text-success" id="routebus" th:field="*{routeBus}">
+								<option th:each="x : ${rbList}" th:value="${x}" th:text="${x}" />
+							</select>
+   							<label for="routebus" class="form-label text-danger"><b>RouteBus:</b></label>
+      					</div>
+						<div class="form-floating mb-1 mt-1">
+							<select class="form-select text-success" id="stationbus" th:field="*{stationBus}">
+								<option th:each="x : ${sbList}" th:value="${x}" th:text="${x}" />
+							</select>
+   							<label for="stationbus" class="form-label text-danger"><b>StationBus:</b></label>
+      					</div>
+						<div class="form-floating mb-1 mt-1">
+   							<input type="text" class="form-control text-success" id="delad" placeholder="De la DATA" name="delad" value="" required pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}" oninvalid="alert('Format: ZZ-LL-AAAA');" th:field="*{delaD}">
+   							<label for="delad" class="form-label text-danger"><b>De la DATA:</b></label>
+						</div>
+						<div class="form-floating mb-1 mt-1">
+   							<input type="text" class="form-control text-success" id="pilad" placeholder="Pana la DATA" name="pilad" value="" required pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}" oninvalid="alert('Format: ZZ-LL-AAAA');" th:field="*{pilaD}">
+   							<label for="pilad" class="form-label text-danger"><b>Pana la DATA:</b></label>
+						</div>
+						<div class="form-floating mb-1 mt-1">
+   							<input type="text" class="form-control text-success" id="delao" placeholder="De la ORA" name="dela" value="" pattern="[0-9]{2}:[0-9]{2}" oninvalid="alert('Format: OO:MM');" th:field="*{delaO}">
+   							<label for="delao" class="form-label text-danger"><b>De la ORA:</b></label>
+						</div>
+						<div class="form-floating mb-1 mt-1">
+   							<input type="text" class="form-control text-success" id="pilao" placeholder="Pana la ORA" name="pila" value="" pattern="[0-9]{2}:[0-9]{2}" oninvalid="alert('Format: OO:MM');" th:field="*{pilaO}">
+   							<label for="pilao" class="form-label text-danger"><b>Pana la ORA:</b></label>
+						</div>
       				</fieldset>
       			</div>
 				<div class="col-sm-5 p-3"></div>
 			</div>
 			<div class="row">
 				<div class="col-sm-6 p-3"></div>
-				<div class="col-sm-1 p-3"></div>
+				<div class="col-sm-1 p-3">
+					<button type="submit" class="btn btn-outline-info">GENERARE RAPORT</button>
+				</div>
 				<div class="col-sm-5 p-3"></div>
 			</div>
 		</form>
+		<div class="row">
+			<div class="col-sm-1 p-3"></div>
+			<div class="col-sm-10 p-3">
+				<table class="table bg-light">
+					<tbody>
+        			<tr class="table-success">
+    	        		<td>NumberBus</td>
+        	    		<td>RouteBus</td>
+            			<td>StationBus</td>
+            			<td>Traveler</td>
+            			<td>TravelerUp</td>
+            			<td>TravelerDown</td>
+            			<td>Data</td>
+            			<td>Ora</td>
+		    	    </tr>
+    		    	<tr th:each="list : ${listBS}">
+			   	        <td th:text="${list.numberBus}"></td>
+	    		   	    <td th:text="${list.routeBus}"></td>
+    	   				<td th:text="${list.stationBus}"></td>
+    	   				<td th:text="${list.traveler}"></td>
+    	   				<td th:text="${list.travelerUp}"></td>
+    	   				<td th:text="${list.travelerDown}"></td>
+    	   				<td th:text="${list.data}"></td>
+			           	<td th:text="${list.ora}"></td>
+    			    </tr>
+    				</tbody>
+    			</table>
+    		</div>
+			<div class="col-sm-1 p-3"></div>
+		</div>
 	</div>
 </body>
 </html>
